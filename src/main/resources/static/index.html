@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main page</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.45/dist/vue.global.min.js"></script>
+    <link rel="stylesheet" href="css/style2.css">
+</head>
+<body>
+    <div class="background">
+        <div class="banner">
+            <div id="navbar" class="navbar">
+                <img class="logo" src="images/f1logo.png">
+                <ul>
+                    <li v-if="!userinfo.loggedIn"><a href="/login.html">Login</a></li>
+                    <li id="username" v-if="userinfo.loggedIn"><a> Welcome {{ userinfo.username }}! </a></li>
+                    <li id="addDriver" v-if="userinfo.username === 'admin'"><a href="/save.html">Add driver</a></li>
+                    <li v-if="userinfo.loggedIn"><a href="/logout">Logout</a></li>
+
+                </ul>
+
+            </div>
+            <div class="content">
+                <h1>JOIN TO THE REAL F1 EXPERIENCE</h1>
+                <p>Choose about the two options, at the fist one you can see the results of the races. <br> The second one is the championship standings.</p>
+                <div>
+                    <button type="button"><span></span>RACE RESULTS</button>
+                    <form action="list.html">
+                        <button type="submit"><span></span>DRIVERS</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--<div class="banner2"></div>-->
+    </div>
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {userinfo: {}};
+        },
+        methods: {
+            getUserInfo() {
+                fetch('/api/userinfo', {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    }
+                }).then(res => res.json()).then(out => this.userinfo = out);
+            }
+        },
+        mounted() {
+            this.getUserInfo();
+        }
+    });
+    app.mount('#navbar');
+</script>
+
+</body>
+</html>
