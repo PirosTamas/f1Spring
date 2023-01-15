@@ -10,9 +10,10 @@ CREATE ROLE f1app WITH
 
 CREATE TABLE users
 (
-    id       SERIAL PRIMARY KEY,
-    username VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(100) NOT NULL
+    id         SERIAL PRIMARY KEY,
+    username   VARCHAR(100) NOT NULL UNIQUE,
+    password   VARCHAR(100) NOT NULL,
+    daily_vote BOOLEAN
 );
 
 CREATE TABLE role
@@ -31,13 +32,14 @@ CREATE TABLE driver
 (
     id              SERIAL PRIMARY KEY,
     driver_name     VARCHAR(100) NOT NULL UNIQUE,
-    team            VARCHAR(100) NOT NULL
+    team            VARCHAR(100) NOT NULL,
+    votes           NUMERIC
 );
 
-INSERT INTO users (username, password)
-VALUES ('admin', '$2a$12$AlrROU6TkYmEMaqCMuUX1OXvbBU1DC0Ft9aTyrEOSncX7wdODjmDW');
-INSERT INTO users (username, password)
-VALUES ('player1', '$2a$12$AlrROU6TkYmEMaqCMuUX1OXvbBU1DC0Ft9aTyrEOSncX7wdODjmDW');
+INSERT INTO users (username, password, daily_vote)
+VALUES ('admin', '$2a$12$AlrROU6TkYmEMaqCMuUX1OXvbBU1DC0Ft9aTyrEOSncX7wdODjmDW', false);
+INSERT INTO users (username, password, daily_vote)
+VALUES ('player1', '$2a$12$AlrROU6TkYmEMaqCMuUX1OXvbBU1DC0Ft9aTyrEOSncX7wdODjmDW', true);
 
 INSERT INTO role (role_name)
 VALUES ('ADMIN');
@@ -57,7 +59,7 @@ SELECT *
 FROM (SELECT u.id FROM users u WHERE u.username = 'player1') a,
      (SELECT r.id FROM "role" r WHERE r.role_name = 'PLAYER') b;
 
-INSERT INTO driver (driver_name, team)
-VALUES ('SEBASTIAN VETTEL', 'ASTON_MARTIN');
-INSERT INTO driver (driver_name, team)
-VALUES ('LEWIS HAMILTON', 'MERCEDES');
+INSERT INTO driver (driver_name, team, votes)
+VALUES ('SEBASTIAN VETTEL', 'ASTON_MARTIN', 0);
+INSERT INTO driver (driver_name, team, votes)
+VALUES ('LEWIS HAMILTON', 'MERCEDES', 0);

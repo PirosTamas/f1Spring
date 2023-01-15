@@ -2,7 +2,9 @@ package com.tomisoft.f1.controller;
 
 import com.tomisoft.f1.enity.Driver;
 import com.tomisoft.f1.enity.Teams;
+import com.tomisoft.f1.enity.User;
 import com.tomisoft.f1.service.DriverService;
+import com.tomisoft.f1.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,7 +19,7 @@ import java.util.Optional;
 public class DriverController {
 
     private final DriverService driverService;
-
+    private final UserService userService;
     @ResponseStatus(code = HttpStatus.CREATED)
     @PutMapping("driver")
     public Driver save(@RequestBody Driver driver)
@@ -45,6 +47,19 @@ public class DriverController {
     public Teams[] getTeamsName()
     {
         return Teams.values();
+    }
+
+    @GetMapping("driver/vote/{id}")
+    public String increaseVote(@PathVariable("id") Long id){
+        User user = userService.getUser();
+        if(user.isDailyVote()) {
+            driverService.increaseVote(id);
+            userService.changeDailyVote(user.getId());
+        }
+
+
+
+        return "Increase was successful";
     }
 
 }

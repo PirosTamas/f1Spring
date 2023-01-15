@@ -16,6 +16,7 @@ public class User {
     private Long id;
     private String username;
     private String password;
+    private boolean dailyVote;
 
     @ManyToMany
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))

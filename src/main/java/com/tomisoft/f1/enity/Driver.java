@@ -20,4 +20,6 @@ public class Driver {
     @Enumerated(EnumType.STRING)
     @JsonProperty("teams")
     private Teams teams;
+
+    private int votes;
 }

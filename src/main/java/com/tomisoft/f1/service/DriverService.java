@@ -14,6 +14,8 @@ import java.util.Optional;
 public class DriverService {
 
     private final DriverRepository driverRepository;
+    private final DriverMapper mapper;
+
     public Driver save(Driver driver)
     {
         return this.driverRepository.save(driver);
@@ -33,5 +35,7 @@ public class DriverService {
     {
         this.driverRepository.deleteById(id);
     }
+
+    public void increaseVote(Long id){this.driverRepository.increaseVote(id);}
 
 }
