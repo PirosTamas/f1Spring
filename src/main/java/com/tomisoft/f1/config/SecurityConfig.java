@@ -13,7 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private static final String[] AUTH_WHITELIST = { "/css/**", "/js/**", "/images/**", "/favicon.ico**", "/login.html", "/"};
+    private static final String[] AUTH_WHITELIST = { "/css/**", "/js/**", "/images/**", "/favicon.ico**", "/login.html", "/", "/api/**"};
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -24,9 +24,13 @@ public class SecurityConfig {
                 }).formLogin(form -> {
                     form.loginPage("/login.html");
                     form.loginProcessingUrl("/perform_login");
-                    form.defaultSuccessUrl("/index.html", true);
+                    form.defaultSuccessUrl("/", true);
                     form.failureUrl("/login.html?error=true");
-                }).logout(LogoutConfigurer::permitAll);
+                }).logout(logout -> {
+                    logout.logoutUrl("/logout");
+                    logout.logoutSuccessUrl("/");
+                    logout.permitAll();
+                });
         return http.build();
 
     }
