@@ -1,46 +1,37 @@
 package com.tomisoft.f1.service;
 
-import com.tomisoft.f1.document.Teams;
-import com.tomisoft.f1.dto.DriverDTO;
-import com.tomisoft.f1.dto.TeamsDTO;
+import com.tomisoft.f1.enity.Driver;
 import com.tomisoft.f1.mapper.DriverMapper;
 import com.tomisoft.f1.repository.DriverRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class DriverService {
 
     private final DriverRepository driverRepository;
-
-    private final DriverMapper driverMapper;
-
-    public Mono<DriverDTO> save(DriverDTO driver)
+    public Driver save(Driver driver)
     {
-        return this.driverRepository.save(this.driverMapper.mapDriver(driver)).map(driverMapper::mapDriverDTO);
+        return this.driverRepository.save(driver);
     }
 
-    public Mono<DriverDTO> findById(String id)
+    public Optional<Driver> findById(Long id)
     {
-        return this.driverRepository.findById(id).map(this.driverMapper::mapDriverDTO);
+        return this.driverRepository.findById(id);
     }
 
-    public Flux<DriverDTO> listAll()
+    public List<Driver> listAll()
     {
-        return driverRepository.findAll().map(this.driverMapper::mapDriverDTO);
+        return driverRepository.findAll();
     }
 
-    public Flux<TeamsDTO> getTeams()
+    public void deleteById(Long id)
     {
-        return Flux.fromArray(TeamsDTO.values());
-    }
-
-    public Mono<Void> delete(String id)
-    {
-        return driverRepository.deleteById(id);
+        this.driverRepository.deleteById(id);
     }
 
 }
