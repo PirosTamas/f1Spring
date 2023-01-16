@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Listázás</title>
@@ -8,12 +9,13 @@
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-<div class="banner">
+<div id="banner" class="banner">
     <div id="navbar" class="navbar">
         <img class="logo" src="images/f1logo.png">
         <ul>
             <li v-if="!userinfo.loggedIn"><a href="/login.html">Login</a></li>
-            <li id="username" v-if="userinfo.loggedIn"><a> Welcome {{ userinfo.username }}! </a></li>
+            <li id="username" v-if="userinfo.loggedIn"><a id="username_a"> Welcome {{ userinfo.username }}! </a></li>
+            <li><a href="/">Home</a></li>
             <li id="addDriver" v-if="userinfo.username === 'admin'"><a href="/save.html">Add driver</a></li>
             <li v-if="userinfo.loggedIn"><a href="/logout">Logout</a></li>
         </ul>
@@ -49,9 +51,20 @@
 <script>
     const app = Vue.createApp({
         data() {
-            return {driverList: []};
+            return {driverList: [], userinfo: {}};
         },
         methods: {
+
+            getUserInfo() {
+                fetch('/api/userinfo', {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    }
+                }).then(res => res.json()).then(out => this.userinfo = out);
+            },
+
             deleteDriver(driver) {
                 fetch('http://localhost:8080/api/driver/' + driver.id, {
                     method: 'DELETE',
@@ -87,9 +100,10 @@
         },
         mounted() {
             this.refreshList();
+            this.getUserInfo();
         }
     });
-    app.mount('#list');
+    app.mount('#banner');
 </script>
 </body>
 </html>

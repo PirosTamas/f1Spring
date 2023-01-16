@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Listázás</title>
@@ -14,6 +15,7 @@
         <ul>
             <li v-if="!userinfo.loggedIn"><a href="/login.html">Login</a></li>
             <li id="username" v-if="userinfo.loggedIn"><a id="username_a"> Welcome {{ userinfo.username }}! </a></li>
+            <li><a href="/">Home</a></li>
             <li id="addDriver" v-if="userinfo.username === 'admin'"><a href="/save.html">Add driver</a></li>
             <li v-if="userinfo.loggedIn"><a href="/logout">Logout</a></li>
         </ul>
@@ -40,9 +42,7 @@
             </tr>
             </tbody>
         </table>
-        <td>
-            <button v-if="userinfo.username === 'admin'" type="button" @click="endVoting()">END VOTING</button>
-        </td>
+        <button v-if="userinfo.username === 'admin'" type="button" @click="endVoting()">END VOTING</button>
     </div>
 </div>
 <script>

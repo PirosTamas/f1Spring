@@ -9,44 +9,55 @@
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-<div class="banner">
+<div id="banner" class="banner">
     <div id="navbar" class="navbar">
         <img class="logo" src="images/f1logo.png">
         <ul>
             <li v-if="!userinfo.loggedIn"><a href="/login.html">Login</a></li>
-            <li id="username" v-if="userinfo.loggedIn"><a> Welcome {{ userinfo.username }}! </a></li>
+            <li id="username" v-if="userinfo.loggedIn"><a id="username_a"> Welcome {{ userinfo.username }}! </a></li>
+            <li><a href="/">Home</a></li>
             <li id="addDriver" v-if="userinfo.username === 'admin'"><a href="/save.html">Add driver</a></li>
             <li v-if="userinfo.loggedIn"><a href="/logout">Logout</a></li>
         </ul>
     </div>
-<div id="driver" class="container mt-5">
-    <div class="row">
-        <label class="col-1" for="name">Name: </label>
-        <input class="col-2" type="text" id="name" v-model="driver.name">
+    <div id="driver" class="container mt-5">
+        <div class="row">
+            <label class="col-1" for="name">Name: </label>
+            <input class="col-2" type="text" id="name" v-model="driver.name">
+        </div>
+        <div class="row">
+            <label class="col-1" for="teams">Team: </label>
+            <select class="col-1" id="teams" v-model="driver.teams">
+                <option v-for="item in teamsList"> {{ item }} </option>
+            </select>
+            <button type="button" class="col-1 text-uppercase" @click="random">Random</button>
+        </div>
+        <div class="row">
+            <button type="button" class="col-2 text-uppercase" @click="save">Save</button>
+            <button type="button" class="col-2 text-uppercase" @click="empty">Clear</button>
+            <button type="button" class="col-2 text-uppercase" @click="back">Back</button>
+        </div>
     </div>
-    <div class="row">
-        <label class="col-1" for="teams">Team: </label>
-        <select class="col-1" id="teams" v-model="driver.teams">
-            <option v-for="item in teamsList"> {{ item }} </option>
-        </select>
-        <button type="button" class="col-1 text-uppercase" @click="random">Random</button>
-    </div>
-    <div class="row">
-        <button type="button" class="col-2 text-uppercase" @click="save">Mentés</button>
-        <button type="button" class="col-2 text-uppercase" @click="empty">Ürítés</button>
-        <button type="button" class="col-2 text-uppercase" @click="back">Vissza</button>
-    </div>
-</div>
 </div>
 <script>
     Vue.createApp({
         data() {
             return {
                 driver: {},
-                teamsList: []
+                teamsList: [],
+                userinfo: {}
             }
         },
         methods: {
+            getUserInfo() {
+                fetch('/api/userinfo', {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    }
+                }).then(res => res.json()).then(out => this.userinfo = out);
+            },
             save() {
                 fetch('http://localhost:8080/api/driver', {
                     method: 'PUT',
@@ -76,6 +87,7 @@
             }
         },
         mounted() {
+            this.getUserInfo();
             const id = new URLSearchParams(window.location.search).get('id');
             if (id != null) {
                 fetch('http://localhost:8080/api/driver/' + id, {
@@ -106,8 +118,7 @@
                 }
             }).then(out => this.teamsList = out);
         }
-    }).mount('#driver')
+    }).mount('#banner')
 </script>
-
 </body>
 </html>
