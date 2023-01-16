@@ -1,7 +1,6 @@
 package com.tomisoft.f1.service;
 
 import com.tomisoft.f1.enity.Driver;
-import com.tomisoft.f1.mapper.DriverMapper;
 import com.tomisoft.f1.repository.DriverRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,7 +13,6 @@ import java.util.Optional;
 public class DriverService {
 
     private final DriverRepository driverRepository;
-    private final DriverMapper mapper;
 
     public Driver save(Driver driver)
     {
