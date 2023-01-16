@@ -36,4 +36,6 @@ public class UserService {
     {
         this.repository.changeDailyVote(id);
     }
+
+    public void clearVote(){this.repository.clearVote();}
 }

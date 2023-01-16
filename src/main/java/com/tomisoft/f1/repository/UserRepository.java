@@ -15,4 +15,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Transactional
     @Query("UPDATE User u SET u.dailyVote = false WHERE u.id = ?1")
     void changeDailyVote(Long id);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE User u SET u.dailyVote = true WHERE u.username NOT LIKE 'admin'")
+    void clearVote();
 }
