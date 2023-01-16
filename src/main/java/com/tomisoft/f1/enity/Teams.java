@@ -1,4 +1,4 @@
-package com.tomisoft.f1.document;
+package com.tomisoft.f1.enity;
 
 public enum Teams {
 
