@@ -1,6 +1,0 @@
-package com.tomisoft.f1.dto;
-
-public enum TeamsDTO {
-
-    RED_BULL, FERRARI, MERCEDES, ALPINE, MCLAREN, ALFA_ROMEO, ASTON_MARTIN, ALPHA_TAURI, HAAS, WILLIAMS;
-}
