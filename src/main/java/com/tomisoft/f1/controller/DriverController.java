@@ -8,8 +8,10 @@ import com.tomisoft.f1.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,13 +22,13 @@ public class DriverController {
 
     private final DriverService driverService;
     private final UserService userService;
+
     @ResponseStatus(code = HttpStatus.CREATED)
     @PutMapping("driver")
     public Driver save(@RequestBody Driver driver)
     {
         return this.driverService.save(driver);
     }
-
     @GetMapping(value = "driver", consumes = MediaType.ALL_VALUE)
     public List<Driver> listAll(){
         return this.driverService.listAll();

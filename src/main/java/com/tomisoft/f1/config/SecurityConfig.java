@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -20,11 +19,12 @@ public class SecurityConfig {
         http.csrf().disable()
                 .authorizeRequests(authorize -> {
                     authorize.antMatchers(AUTH_WHITELIST).permitAll();
+                    authorize.antMatchers("/save.html").hasAuthority("ADMIN");
                     authorize.anyRequest().authenticated();
                 }).formLogin(form -> {
                     form.loginPage("/login.html");
                     form.loginProcessingUrl("/perform_login");
-                    form.defaultSuccessUrl("/", true);
+                    form.defaultSuccessUrl("/", false);
                     form.failureUrl("/login.html?error=true");
                 }).logout(logout -> {
                     logout.logoutUrl("/logout");
