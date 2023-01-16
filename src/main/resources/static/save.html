@@ -9,6 +9,16 @@
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
+<div class="banner">
+    <div id="navbar" class="navbar">
+        <img class="logo" src="images/f1logo.png">
+        <ul>
+            <li v-if="!userinfo.loggedIn"><a href="/login.html">Login</a></li>
+            <li id="username" v-if="userinfo.loggedIn"><a> Welcome {{ userinfo.username }}! </a></li>
+            <li id="addDriver" v-if="userinfo.username === 'admin'"><a href="/save.html">Add driver</a></li>
+            <li v-if="userinfo.loggedIn"><a href="/logout">Logout</a></li>
+        </ul>
+    </div>
 <div id="driver" class="container mt-5">
     <div class="row">
         <label class="col-1" for="name">Name: </label>
@@ -26,6 +36,7 @@
         <button type="button" class="col-2 text-uppercase" @click="empty">Ürítés</button>
         <button type="button" class="col-2 text-uppercase" @click="back">Vissza</button>
     </div>
+</div>
 </div>
 <script>
     Vue.createApp({
