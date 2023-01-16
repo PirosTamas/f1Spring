@@ -38,4 +38,6 @@ public class DriverService {
 
     public void increaseVote(Long id){this.driverRepository.increaseVote(id);}
 
+    public void clearVote(){this.driverRepository.clearVote();}
+
 }

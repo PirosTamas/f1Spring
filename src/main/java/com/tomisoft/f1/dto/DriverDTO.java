@@ -1,17 +1,19 @@
 package com.tomisoft.f1.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tomisoft.f1.document.Teams;
+import com.tomisoft.f1.enity.Teams;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
+
+import javax.persistence.*;
 
 @Data
 public class DriverDTO {
 
-    @Id
-    private String id;
+    private Long id;
+
     private String name;
 
-    @JsonProperty("teams")
     private Teams teams;
+
+    private int votes;
 }

@@ -1,3 +1,7 @@
+body{
+    background: #2d3032;
+}
+
 table {
     border-collapse: collapse;
     margin: 25px 0;
@@ -7,8 +11,8 @@ table {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
-table thead tr {
-    background-color: #009879;
+.table thead tr {
+    background-color: red; !important;
     color: #ffffff;
     text-align: left;
 }
@@ -27,12 +31,12 @@ table tbody tr:nth-of-type(even) {
 }
 
 table tbody tr:last-of-type {
-    border-bottom: 2px solid #009879;
+    border-bottom: 2px solid #f3f3f3;
 }
 
 button {
     border-radius: 4px;
-    background: linear-gradient(to right, #67b26b, #4ca2cb) !important;
+    background: linear-gradient(to right, #B41C1C, #6B1F20) !important;
     border: none;
     color: #FFFFFF;
     text-align: center;
@@ -54,4 +58,61 @@ label {
     display: inline-block;
     width: 25px;
     color: #777777;
+}
+.col-auto{
+    color: #FFFFFF;
+}
+
+.banner{
+    width: 100%;
+    height: 100vh;
+    background-image: linear-gradient(rgba(0,0,0,0.76), rgba(0,0,0,0.76)), url("../images/background.jpg");
+    background-size: cover;
+    background-position: center;
+    float: left;
+}
+.navbar{
+    width: 85%;
+    margin: auto;
+    padding: 35px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.navbar ul li{
+    list-style: none;
+    display: inline-block;
+    margin: 0 20px;
+    position: relative;
+}
+.navbar ul li a{
+    text-decoration: none;
+    color: #FFFFFF;
+    text-transform: uppercase;
+}
+.navbar ul li::after{
+    content: '';
+    height: 3px;
+    width: 0;
+    background: red;
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    transition: 0.5s;
+}
+.navbar ul li:hover::after{
+    width: 100%;
+}
+#username::after{
+    content: '';
+    height: 0;
+}
+#username_a
+{
+    color: #FFFFFF;
+}
+.logo{
+    width: 10%;
+    height: 10%;
+    cursor: pointer;
 }

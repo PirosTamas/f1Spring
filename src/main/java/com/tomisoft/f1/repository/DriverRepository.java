@@ -19,4 +19,11 @@ public interface DriverRepository extends JpaRepository<Driver, Long> {
     @Query("UPDATE Driver d SET d.votes = d.votes + 1 WHERE d.id = ?1")
     void increaseVote(Long id);
 
+    @Modifying
+    @Transactional
+    @Query("UPDATE Driver d SET d.votes = 0")
+    void clearVote();
+
+
+
 }

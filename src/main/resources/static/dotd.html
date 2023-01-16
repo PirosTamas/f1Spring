@@ -8,29 +8,42 @@
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-<div id="list" class="container">
-    <table class="table table-dark">
-        <thead>
-        <tr>
-            <th>Identifier</th>
-            <th>Name</th>
-            <th>Team</th>
-            <th>Vote</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="item in driverList">
-            <td>{{ item.id }}</td>
-            <td>{{ item.name }}</td>
-            <td>{{ item.teams }}</td>
-            <td>{{ item.votes }}</td>
-            <td>
-                <button type="button" @click="voteDriver(item)">VOTE</button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <p> {{ userinfo.username }}</p>
+<div id="banner" class="banner">
+    <div id="navbar" class="navbar">
+        <img class="logo" src="images/f1logo.png">
+        <ul>
+            <li v-if="!userinfo.loggedIn"><a href="/login.html">Login</a></li>
+            <li id="username" v-if="userinfo.loggedIn"><a id="username_a"> Welcome {{ userinfo.username }}! </a></li>
+            <li id="addDriver" v-if="userinfo.username === 'admin'"><a href="/save.html">Add driver</a></li>
+            <li v-if="userinfo.loggedIn"><a href="/logout">Logout</a></li>
+        </ul>
+    </div>
+    <div id="list" class="container">
+        <table class="table table-dark">
+            <thead>
+            <tr>
+                <th>Identifier</th>
+                <th>Name</th>
+                <th>Team</th>
+                <th>Vote</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="item in driverList">
+                <td>{{ item.id }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.teams }}</td>
+                <td>{{ item.votes }}</td>
+                <td>
+                    <button type="button" @click="voteDriver(item)">VOTE</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <td>
+            <button v-if="userinfo.username === 'admin'" type="button" @click="endVoting()">END VOTING</button>
+        </td>
+    </div>
 </div>
 <script>
     const app = Vue.createApp({
@@ -62,6 +75,22 @@
                     }
                 });
             },
+            endVoting() {
+                if(!window.confirm(`Are you make sure to end the voting`)) return;
+                fetch('http://localhost:8080/api/driver/vote/', {
+                    method: 'PUT',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    }
+                }).then(res => {
+                    if (res.ok) {
+                        this.refreshList();
+                    } else {
+                        throw new Error(res.error);
+                    }
+                });
+            },
             refreshList() {
                 fetch('http://localhost:8080/api/driver', {
                     method: 'GET',
@@ -71,14 +100,15 @@
                     }
                 })
                     .then(res => res.json())
-                    .then(out => this.driverList = out);
+                    .then(out => this.driverList = out)
             }
         },
         mounted() {
             this.refreshList();
+            this.getUserInfo();
         }
     });
-    app.mount('#list');
+    app.mount('#banner');
 </script>
 </body>
 </html>

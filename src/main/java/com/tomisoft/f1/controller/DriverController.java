@@ -56,10 +56,16 @@ public class DriverController {
             driverService.increaseVote(id);
             userService.changeDailyVote(user.getId());
         }
-
-
-
         return "Increase was successful";
+    }
+
+    @PutMapping("/driver/vote")
+    public String clearVote()
+    {
+        driverService.clearVote();
+        userService.clearVote();
+
+        return "Clearing was successfull";
     }
 
 }
