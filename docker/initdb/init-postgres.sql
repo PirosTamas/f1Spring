@@ -40,6 +40,10 @@ INSERT INTO users (username, password, daily_vote)
 VALUES ('admin', '$2a$12$AlrROU6TkYmEMaqCMuUX1OXvbBU1DC0Ft9aTyrEOSncX7wdODjmDW', false);
 INSERT INTO users (username, password, daily_vote)
 VALUES ('player1', '$2a$12$AlrROU6TkYmEMaqCMuUX1OXvbBU1DC0Ft9aTyrEOSncX7wdODjmDW', true);
+INSERT INTO users (username, password, daily_vote)
+VALUES ('player2', '$2a$12$AlrROU6TkYmEMaqCMuUX1OXvbBU1DC0Ft9aTyrEOSncX7wdODjmDW', true);
+INSERT INTO users (username, password, daily_vote)
+VALUES ('player3', '$2a$12$AlrROU6TkYmEMaqCMuUX1OXvbBU1DC0Ft9aTyrEOSncX7wdODjmDW', true);
 
 INSERT INTO role (role_name)
 VALUES ('ADMIN');
@@ -60,6 +64,10 @@ FROM (SELECT u.id FROM users u WHERE u.username = 'player1') a,
      (SELECT r.id FROM "role" r WHERE r.role_name = 'PLAYER') b;
 
 INSERT INTO driver (driver_name, team, votes)
-VALUES ('SEBASTIAN VETTEL', 'ASTON_MARTIN', 0);
+VALUES ('SEBASTIAN VETTEL', 'ASTON_MARTIN', 5);
 INSERT INTO driver (driver_name, team, votes)
-VALUES ('LEWIS HAMILTON', 'MERCEDES', 0);
+VALUES ('LEWIS HAMILTON', 'MERCEDES', 3);
+INSERT INTO driver (driver_name, team, votes)
+VALUES ('Lando Norris', 'MCLAREN', 3);
+INSERT INTO driver (driver_name, team, votes)
+VALUES ('Max Verstappen', 'RED_BULL', 0);
